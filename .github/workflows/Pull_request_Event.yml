@@ -1,4 +1,4 @@
-name: Activity types for pull request #primero ponemos el nombre, no hay novedad
+name: Activity types for pull request, specific push, and paths-ignore #primero ponemos el nombre, no hay novedad
 on: #en lugar en poner un trigger especifico, lo ponemos como una lista, en el cual se pueden agregar varios triggers
   pull_request:
     types: #podemos ponerlo asi: [opened, closed]
