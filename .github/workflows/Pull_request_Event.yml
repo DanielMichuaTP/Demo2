@@ -1,0 +1,30 @@
+name: Activity types for pull request #primero ponemos el nombre, no hay novedad
+on: #en lugar en poner un trigger especifico, lo ponemos como una lista, en el cual se pueden agregar varios triggers
+  pull_request:
+    types: #podemos ponerlo asi: [opened, closed]
+      - opened #CONDICION 1: aqui podemos ver que se hara trigger con el pull request solo si es que se abre
+    # - closed    . . . y asi en caso de que se necesite que sean simultaneos
+  push:
+    branches: #CONDICION 2: Solo se activara el workflow, si es que se hizo pull request, se apunto a alguna de las ramas abajo
+      - main
+      - 'dev-*'
+      - 'feat/**'
+  paths-ignore:
+      - '.github/workflows/*' #CONDICION 3: Y solo si es que la condicion 1 y 2 se cumplieron, y tambien se activara el workflow si es que no se ignoro algun archivo de la ruta especificada (por eso gitignore, que es que se ignoraron los archivos, se activa), tambien aplica a la contraria, se activa si se modifica, si no NO
+  workflow_dispatch:  #tambien podemos agregar otro de manera paralela, cuando no tenemos mas detalles para ello, o casos especificos, lo dejamos asi, tiene que esta al mismo nivel que pull_request
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output event data
+        run: echo "${{ toJSON(github.event) }}"
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm ci
+      - name: Test code
+        run: npm run test
+      - name: Build code
+        run: npm run build
+      - name: Deploy project
+        run: echo "Deploying..."

@@ -1,9 +1,10 @@
 name: Activity types for pull request #primero ponemos el nombre, no hay novedad
 on: #en lugar en poner un trigger especifico, lo ponemos como una lista, en el cual se pueden agregar varios triggers
-  pull_request:
-    types: #podemos ponerlo asi: [opened, closed]
-      - opened
-    # - closed    . . . y asi en caso de que se necesite que sean simultaneos
+  push:
+    branches: #solo se activara el trigger, si es que se hace push a alguna de estas ramas
+      - main
+      - 'dev-*'
+      - 'feat/**'
   workflow_dispatch:  #tambien podemos agregar otro de manera paralela, cuando no tenemos mas detalles para ello, o casos especificos, lo dejamos asi, tiene que esta al mismo nivel que pull_request
 jobs:
   deploy:
